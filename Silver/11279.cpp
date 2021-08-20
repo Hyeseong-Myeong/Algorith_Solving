@@ -7,9 +7,11 @@ int n, input;
 
 void insertMaxHeap() {
 	int child = heap.size() - 1;
-	while (heap[child] > heap[child / 2] && child/2 >=1) {
-		swap(heap[child], heap[child / 2]);
-		child /= 2;
+	int parent = child / 2;
+	while (child > 1 && heap[child] > heap[parent]) {
+		swap(heap[child], heap[parent]);
+		child = parent;
+		parent /= 2;
 	}
 }
 
@@ -19,12 +21,13 @@ void deleteMaxHeap() {
 	int parent = 1;
 	int child = parent * 2;
 
-	if (child + 1 <= heap.size() - 1) {//조건에 error 발생
+	if (child + 1 <= heap.size() - 1) {
 		child = (heap[child] > heap[child + 1]) ? child : child + 1;
 	}
 
 	while (child <= heap.size() - 1 && heap[child] > heap[parent]) {
 		swap(heap[child], heap[parent]);
+		parent = child;
 		child *= 2;
 
 		if (child + 1 <= heap.size() - 1) {
@@ -46,10 +49,10 @@ int main() {
 		cin >> input;
 		if (input == 0) {
 			if (heap.size() == 1) {
-				cout << 0 << endl;
+				cout << 0 << '\n';
 			}
 			else {
-				cout << heap[1] << endl;
+				cout << heap[1] << '\n';
 				deleteMaxHeap();
 			}
 		}
