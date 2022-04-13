@@ -1,77 +1,51 @@
 #include <iostream>
 #include <algorithm>
+#include <vector>
 using namespace std;
 
-//시간초과
-//이진탐색으로 시간복잡도 줄이기
-/*
-void binarySearch(int* M, int start, int end, int Num) {
-	int mid;
+int N, M;
+vector <int> Nlist;
+vector <int> Mlist;
 
-	if (start > end) {
-		cout << 0 << "\n";
-		return;
+void input() {
+	int temp;
+	cin >> N;
+	for (int i = 0; i < N; i++) {
+		cin >> temp;
+		Nlist.push_back(temp);
 	}
-	else {
-		mid = (start + end) / 2;
-		if (M[mid] == Num)
-			cout << 1 << "\n";
-		else if (M[mid] > Num) {
-			return binarySearch(M, start, mid - 1, Num);
-		}
-		else if (M[mid] < Num) {
-			return binarySearch(M, mid + 1, end, Num);
-		}
-		else {
-			cout << 0 << "\n";
-			return;
-		}
+
+	cin >> M;
+	for (int i = 0; i < M; i++) {
+		cin >> temp;
+		Mlist.push_back(temp);
 	}
 }
-*/
 
-void binarySearch(int* arr, int start, int end, int Num) {
-	int mid;
+void solve() {
+	int temp;
 
-	while (end - start >= 0) {
-		mid = (start + end) / 2;
+	sort(Nlist.begin(), Nlist.end());
 
-		if (arr[mid] == Num) {
-			printf("1 \n");
-			return;
-		}
-		else if (arr[mid] > Num) {
-			end = mid - 1;
+	for (int i = 0; i < M; i++) {
+		bool isin = binary_search(Nlist.begin(), Nlist.end(), Mlist[i]);
+		
+		if (isin) {
+			cout << 1 << '\n';
 		}
 		else {
-			start = mid + 1;
+			cout << 0 << '\n';
 		}
 	}
-
-	printf("0 \n");
-	return;
-
 }
 
 int main() {
-	int m, n;
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL); 
 
-	scanf("%d", &m);
-	int* M;
-	M = new int[m];
+	input();
+	solve();
 
-	for (int i = 0; i < m; i++) {
-		scanf("%d", &M[i]);
-	}
-
-	sort(M, M + m);
-	int end = m;
-	scanf("%d", &n);
-	int* N;
-	N = new int[n];
-
-	for (int i = 0; i < n; i++) {
-		scanf("%d", &N[i]);
-		binarySearch(M, 0, end, N[i]);
-	}
+	return 0;
 }
